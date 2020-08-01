@@ -12,6 +12,7 @@
 </head>
 <body>
 <div id="app">
+    @include('partials._header')
     {{$slot}}
 </div>
 </body>
