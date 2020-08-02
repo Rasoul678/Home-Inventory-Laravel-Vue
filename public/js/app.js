@@ -1915,8 +1915,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  data: function data() {
+    return {
+      authUser: this.user
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log(this.user);
   }
 });
 
@@ -37515,7 +37521,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "text-center text-6xl" }, [
-    _vm._v("\n    Example Component!\n")
+    _vm._v("\n    Welcome!\n")
   ])
 }
 var staticRenderFns = []

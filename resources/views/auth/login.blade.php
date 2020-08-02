@@ -15,12 +15,6 @@
                     required
                     autocomplete="email"
                     autofocus>
-
-                @error('email')
-                <span class="text-red-400">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
             </div>
             <div class="my-4 flex justify-between">
                 <label for="password" class="">{{ __('Password') }}</label>
@@ -31,11 +25,6 @@
                     name="password"
                     required
                     autocomplete="current-password">
-                @error('password')
-                <span class="text-red-400">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
             </div>
             <div class="my-4 text-center">
                 <input
@@ -46,6 +35,11 @@
                     {{ __('Remember Me') }}
                 </label>
             </div>
+            @error('password')
+            <p class="text-red-400">
+                <strong>{{ $message }}</strong>
+            </p>
+            @enderror
             <div class="my-3 text-center">
                 <button type="submit" class="py-1 px-6 bg-green-300 border-2 border-black w-full rounded-full mr-4">
                     {{ __('Login') }}

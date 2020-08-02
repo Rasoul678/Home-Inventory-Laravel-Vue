@@ -2,6 +2,7 @@
     <div class="flex justify-between font-bold mx-12">
         <div>
             <a class="bg-blue-300 py-2 px-4 border rounded-full" href="{{ url('/') }}">Home</a>
+            <span class="text-xl">Inventory</span>
         </div>
         <div>
             @auth

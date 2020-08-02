@@ -14,11 +14,6 @@
                     required
                     autofocus>
 
-                @error('name')
-                <span class="text-red-400">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
             </div>
 
             <div class="my-4 flex justify-between">
@@ -30,11 +25,6 @@
                     name="email"
                     required>
 
-                @error('email')
-                <span class="text-red-400">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
             </div>
             <div class="my-4 flex justify-between">
                 <label for="password" class="">{{ __('Password') }}</label>
@@ -44,11 +34,7 @@
                     class="border-2 border-black rounded-md p-1"
                     name="password"
                     required>
-                @error('password')
-                <span class="text-red-400">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+
             </div>
             <div class="my-4 flex justify-between">
                 <label for="password-confirm" class="">{{ __('Confirm Password') }}</label>
