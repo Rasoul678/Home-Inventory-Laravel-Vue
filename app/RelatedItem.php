@@ -5,14 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class RelatedItem extends Model
 {
     use SoftDeletes;
 
     protected $guarded = [];
-
-    public function relatedItems()
-    {
-        return $this->hasMany(RelatedItem::class);
-    }
 }

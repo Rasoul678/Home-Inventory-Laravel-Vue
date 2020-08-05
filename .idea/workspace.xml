@@ -17,7 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="beaac198-d624-4e35-9250-a7ba68861347" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +144,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Laravel with React/ReactReduxLaravel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -167,7 +167,8 @@
       <updated>1596266980153</updated>
       <workItem from="1596266981225" duration="16609000" />
       <workItem from="1596353797584" duration="7554000" />
-      <workItem from="1596377914140" duration="4234000" />
+      <workItem from="1596377914140" duration="5597000" />
+      <workItem from="1596436046021" duration="175000" />
     </task>
     <servers />
   </component>
@@ -203,6 +204,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Seed to Database" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="466" y="122" width="424" height="490" key="FileChooserDialogImpl" timestamp="1596436209412">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="466" y="122" width="424" height="490" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1596436209412" />
     <state x="476" y="288" width="404" height="157" key="NewPhpFileDialog" timestamp="1596290815704">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
