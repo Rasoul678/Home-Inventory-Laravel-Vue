@@ -15,6 +15,7 @@ class CreateSizesTable extends Migration
     {
         Schema::create('sizes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shape_id')->constrained()->cascadeOnDelete();
             $table->string('name')->unique();
             $table->float('length');
             $table->float('width');

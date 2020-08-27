@@ -9,5 +9,17 @@ class Size extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'shape_id', 'name', 'length', 'width', 'height', 'volume',
+    ];
+
+    public function shape()
+    {
+        return $this->belongsTo(Shape::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }

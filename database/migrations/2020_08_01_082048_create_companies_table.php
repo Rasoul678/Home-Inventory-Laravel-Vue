@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->foreignId('address_id')->constrained()->cascadeOnDelete();
             $table->string('name')->unique();
             $table->string('type');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('description')->nullable();
             $table->string('logo_url')->nullable();
             $table->string('website_url')->nullable();

@@ -12,6 +12,7 @@ $factory->define(State::class, function (Faker $faker) {
     $state = $faker->unique()->state;
     return [
         'name'=>$state,
-        'code'=>Str::upper(Str::substr($state, 0, 2))
+        'code'=>Str::upper(Str::substr($state, 0, 2)),
+        'country_id'=>1
     ];
 });

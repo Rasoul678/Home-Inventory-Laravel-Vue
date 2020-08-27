@@ -10,6 +10,18 @@ class Address extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'state_id', 'country_id', 'street_address_1', 'street_address_2', 'city', 'zipcode'
+        'state_id', 'street_address_1', 'street_address_2', 'city', 'zipcode', 'latitude', 'longitude'
     ];
+
+    protected $with = ['state'];
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
 }

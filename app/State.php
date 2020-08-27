@@ -9,5 +9,15 @@ class State extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

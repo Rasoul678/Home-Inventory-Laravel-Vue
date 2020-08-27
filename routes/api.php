@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/states', 'StateController@index');
+
+Route::get('/states/{state}', 'StateController@show');
+
+Route::get('/addresses', 'AddressController@index');

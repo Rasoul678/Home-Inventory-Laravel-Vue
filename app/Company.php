@@ -13,13 +13,18 @@ class Company extends Model
         'address_id', 'name', 'email', 'description', 'logo_url', 'website_url'
     ];
 
-    public function itemInfos()
+    public function address()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function products()
     {
         return $this->hasMany(ItemInfo::class, 'retailer_id');
     }
 
     public function items()
     {
-        return $this->hasMany(Item::class, 'company_id');
+        return $this->hasMany(Item::class);
     }
 }

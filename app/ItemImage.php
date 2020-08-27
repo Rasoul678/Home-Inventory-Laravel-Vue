@@ -9,5 +9,10 @@ class ItemImage extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = ['image_url'];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

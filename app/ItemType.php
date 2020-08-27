@@ -9,5 +9,10 @@ class ItemType extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [];
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }

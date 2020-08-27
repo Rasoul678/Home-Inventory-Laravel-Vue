@@ -7,6 +7,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +21,12 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('l-map', LMap);
+Vue.component('l-tile-layer', LTileLayer);
+Vue.component('l-marker', LMarker);
+
+Vue.component('create-address', require('./components/CreateAddressComponent.vue').default);
+Vue.component('map-address', require('./components/AddressMapComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

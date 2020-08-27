@@ -9,5 +9,10 @@ class Shape extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [];
+
+    public function sizes()
+    {
+        return $this->hasMany(Size::class);
+    }
 }

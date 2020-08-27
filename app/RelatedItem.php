@@ -9,5 +9,5 @@ class RelatedItem extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = ['item_id', 'related_item_id'];
 }

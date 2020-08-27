@@ -9,5 +9,12 @@ class Country extends Model
 {
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [];
+
+    protected $with = ['states'];
+
+    public function states()
+    {
+        return $this->hasMany(State::class);
+    }
 }

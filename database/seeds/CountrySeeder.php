@@ -12,6 +12,9 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        factory(Country::class, 10)->create();
+        factory(Country::class)->create([
+            'name'=>'United States',
+            'code'=>'US'
+        ]);
     }
 }
