@@ -12,11 +12,17 @@
     <script src="{{asset('js/app.js')}}" defer></script>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        #card:hover{
+            transform: rotateY(180deg);
+        }
+    </style>
 </head>
 <body>
 <div id="app">
     @include('partials._header')
     {{$slot}}
 </div>
+@include('sweetalert::alert')
 </body>
 </html>

@@ -10,8 +10,10 @@ class Company extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'address_id', 'name', 'email', 'description', 'logo_url', 'website_url'
+        'address_id', 'type', 'name', 'email', 'description', 'logo_url', 'website_url'
     ];
+
+    protected $with = ['address'];
 
     public function address()
     {

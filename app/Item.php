@@ -13,6 +13,8 @@ class Item extends Model
         'user_id', 'company_id', 'size_id', 'item_type_id', 'name', 'description', 'sku', 'sparks_joy'
     ];
 
+    protected $with = ['user', 'company', 'type'];
+
     public function relatedTo()
     {
         return $this->hasMany(RelatedItem::class);
@@ -35,7 +37,7 @@ class Item extends Model
 
     public function type()
     {
-        return $this->belongsTo(ItemType::class);
+        return $this->belongsTo(ItemType::class, 'item_type_id');
     }
 
     public function products()

@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "leaflet": "^1.6.0",
+        "sweetalert": "^2.1.2",
         "tailwindcss": "^1.6.0",
         "vue2-leaflet": "^2.5.2"
     }

@@ -25,8 +25,13 @@ Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 
-Vue.component('create-address', require('./components/CreateAddressComponent.vue').default);
-Vue.component('map-address', require('./components/AddressMapComponent.vue').default);
+Vue.component('items', require('./components/Items.vue').default);
+Vue.component('show-item', require('./components/ShowItem.vue').default);
+Vue.component('create-item', require('./components/CreateItem.vue').default);
+Vue.component('create-address', require('./components/CreateAddress.vue').default);
+Vue.component('create-company', require('./components/CreateCompany.vue').default);
+Vue.component('map-address', require('./components/AddressMap.vue').default);
+Vue.component('map-company', require('./components/CompanyMap.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

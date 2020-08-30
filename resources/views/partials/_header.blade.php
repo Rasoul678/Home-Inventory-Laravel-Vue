@@ -2,7 +2,7 @@
     <div class="flex justify-between items-center font-bold mx-4 md:mx-10">
         <div>
             @auth
-                <a class="text-white text-3xl md:text-4xl mr-2" href="{{ url('/inventory') }}">
+                <a class="text-white text-3xl md:text-4xl mr-2" href="{{ route('items.index') }}">
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </a>
             @endauth

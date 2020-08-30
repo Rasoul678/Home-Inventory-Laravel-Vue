@@ -2,7 +2,7 @@
     <create-address inline-template>
         <div class="grid grid-cols-8">
             <form v-on:submit.prevent="createAddress()" class="col-start-2 col-span-6 md:col-start-3 md:col-span-4">
-                <h1 class="text-center text-2xl md:text-4xl my-10">New Address</h1>
+                <h1 class="text-center text-2xl md:text-4xl my-10 font-bold">New Address</h1>
                 <div class="my-2">
                     <label for="street-1" class="text-md md:text-xl">Street Address 1:</label>
                     <input
@@ -35,7 +35,7 @@
                             class="border-2 p-2 rounded border-black w-full"
                             required
                         >
-                            <option value="">Choose...</option>
+                            <option value="">Select...</option>
                             @foreach($countries as $country)
                                 <option value="{{ $country }}">{{ $country->name }}</option>
                             @endforeach
@@ -50,7 +50,7 @@
                             class="border-2 p-2 rounded border-black w-full"
                             required
                         >
-                            <option value="">Choose...</option>
+                            <option value="">Select...</option>
                             <option v-for="state in states" v-text="state.name" v-bind:value="state.id"></option>
                         </select>
                     </div>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <map-address @latlng="setLatLng"></map-address>
-                <button type="submit" class="mt-5 p-2 bg-teal-400 w-full rounded text-xl">Create</button>
+                <button type="submit" class="mt-5 p-2 bg-teal-400 w-full rounded text-xl font-bold">Create</button>
             </form>
         </div>
     </create-address>

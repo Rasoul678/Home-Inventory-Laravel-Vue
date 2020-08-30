@@ -47,8 +47,8 @@ class AddressController extends Controller
                 'street_address_2'=>'max:255',
                 'city'=>'required|max:255',
                 'zipcode'=>'required|max:10',
-                'latitude'=>'nullable',
-                'longitude'=>'nullable'
+                'latitude'=>'required',
+                'longitude'=>'required'
             ]);
 
             $address = Address::create($attributes);
