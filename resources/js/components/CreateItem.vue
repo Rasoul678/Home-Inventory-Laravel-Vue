@@ -1,6 +1,6 @@
 <script>
 export default {
-    props: ['user'],
+    props: [],
 
     data(){
         return {
@@ -45,7 +45,6 @@ export default {
             })
                 .then((response) => {
                     const item = {
-                        user_id: this.user.id,
                         size_id: response.data.id,
                         company_id: this.itemCompany,
                         item_type_id: this.itemType,
@@ -59,11 +58,23 @@ export default {
                         data: item
                     })
                         .then((response) => {
-                            swal("Item has been added!", {
-                                buttons: false,
-                                timer: 3000,
-                            });
-                            this.clear();
+                            if(response.data.message){
+                                swal({
+                                    title: response.data.message,
+                                    text: 'Select another name, Please.',
+                                    icon: "warning",
+                                    buttons: false,
+                                    timer: 3000,
+                                });
+                            }else{
+                                swal({
+                                    title: "Good job!",
+                                    text: "Item has been added!",
+                                    icon: "success",
+                                    button: "OK",
+                                });
+                                this.clear();
+                            }
                         })
                         .catch(error => console.log(error));
                 })

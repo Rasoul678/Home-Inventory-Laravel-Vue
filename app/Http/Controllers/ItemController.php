@@ -6,7 +6,7 @@ use App\Company;
 use App\Item;
 use App\ItemType;
 use App\Shape;
-use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\File;
 
 class ItemController extends Controller
 {
@@ -30,7 +30,7 @@ class ItemController extends Controller
     public function create()
     {
         $shapes = Shape::all();
-        $companies = Company::all();
+        $companies = Company::where('type', 'producer')->get();
         $types = ItemType::all();
 
         return view('items.create', compact(['shapes', 'companies', 'types']));
@@ -40,7 +40,6 @@ class ItemController extends Controller
     {
         try {
             $attributes = request()->validate([
-                'user_id'=> 'required|exists:users,id',
                 'company_id'=>'required|exists:companies,id',
                 'size_id'=>'required|exists:sizes,id',
                 'item_type_id'=>'required|exists:item_types,id',
@@ -48,15 +47,37 @@ class ItemController extends Controller
                 'description'=>'nullable',
             ]);
 
+            $attributes['user_id'] = auth()->id();
+
             $item = Item::create($attributes);
 
             return response()->json($item);
 
-        }catch (QueryException $exception)
+        }catch (\Exception $exception)
         {
-            return response()->json($exception);
+            return response()->json(['message'=>'Item already exists!']);
         }
     }
+
+    public function edit(Item $item)
+    {
+        return view('items.edit', compact('item'));
+    }
+
+    public function destroy(Item $item)
+{
+    $item->images->each(function($image){
+        $image_path = public_path( '/storage/' . $image->image_url);
+
+        if(file_exists($image_path)){
+            File::delete( $image_path);
+        }
+    });
+
+    $item->delete();
+
+    return redirect(route('items.index'));
+}
 
     public function upload(Item $item)
     {
@@ -64,10 +85,23 @@ class ItemController extends Controller
             'image_url'=>'required|image'
         ]);
 
-        $item->images()->create([
+        $image = $item->images()->create([
             'image_url'=>request()->file('image_url')->store('itemImages', 'public'),
         ]);
 
-        return back();
+        return response()->json($image);
+    }
+
+    public function remove(Item $item, $imageId)
+    {
+        $image_path = public_path( '/storage/' . $item->images()->where('id', $imageId)->first()->image_url);
+
+        if(file_exists($image_path)){
+            File::delete( $image_path);
+        }
+
+        $item->images()->whereId($imageId)->delete();
+
+        return response()->json(['message'=>'Image deleted!']);
     }
 }

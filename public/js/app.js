@@ -2233,7 +2233,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: [],
   data: function data() {
     return {
       itemName: '',
@@ -2276,7 +2276,6 @@ __webpack_require__.r(__webpack_exports__);
         data: size
       }).then(function (response) {
         var item = {
-          user_id: _this.user.id,
           size_id: response.data.id,
           company_id: _this.itemCompany,
           item_type_id: _this.itemType,
@@ -2288,12 +2287,24 @@ __webpack_require__.r(__webpack_exports__);
           url: '/api/items',
           data: item
         }).then(function (response) {
-          swal("Item has been added!", {
-            buttons: false,
-            timer: 3000
-          });
+          if (response.data.message) {
+            swal({
+              title: response.data.message,
+              text: 'Select another name, Please.',
+              icon: "warning",
+              buttons: false,
+              timer: 3000
+            });
+          } else {
+            swal({
+              title: "Good job!",
+              text: "Item has been added!",
+              icon: "success",
+              button: "OK"
+            });
 
-          _this.clear();
+            _this.clear();
+          }
         })["catch"](function (error) {
           return console.log(error);
         });
@@ -2359,15 +2370,119 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ['item'],
   data: function data() {
-    return {};
+    return {
+      avatars: []
+    };
   },
   methods: {
-    uploadImage: function uploadImage() {
-      console.log('Upload');
+    uploadImage: function uploadImage(e) {
+      var _this = this;
+
+      var input = e.target.elements[0];
+      if (!input.files.length) return;
+      var file = input.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function (e) {
+        var avatar = {
+          id: -1,
+          image_url: e.target.result
+        };
+        _this.avatars = [].concat(_toConsumableArray(_this.avatars), [avatar]);
+      };
+
+      e.target.reset();
+      this.persist(file);
+    },
+    persist: function persist(file) {
+      var _this2 = this;
+
+      var data = new FormData();
+      data.append('image_url', file);
+      axios({
+        method: 'POST',
+        url: "/api/items/".concat(this.item.id, "/images"),
+        data: data
+      }).then(function (response) {
+        swal({
+          title: "Good job!",
+          text: "Image has been added!",
+          icon: "success",
+          button: "OK"
+        });
+
+        var avatar = _this2.avatars.find(function (avatar) {
+          return avatar.id === -1;
+        });
+
+        avatar.id = response.data.id;
+        console.log(response.data);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    deleteImage: function deleteImage(id) {
+      var _this3 = this;
+
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will be able to recover this image, Soon!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          var index = _this3.avatars.findIndex(function (avatar) {
+            return avatar.id === id;
+          });
+
+          _this3.avatars.splice(index, 1);
+
+          _this3.remove(id);
+        } else {
+          swal("Your image is safe!");
+        }
+      });
+    },
+    remove: function remove(id) {
+      axios({
+        method: 'DELETE',
+        url: "/api/items/".concat(this.item.id, "/images/").concat(id)
+      }).then(function (response) {
+        swal("Poof! Your image has been deleted!", {
+          icon: "success"
+        });
+        console.log(response.data);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
     }
+  },
+  mounted: function mounted() {
+    var _this4 = this;
+
+    this.item.images.forEach(function (image) {
+      _this4.avatars.push({
+        id: image.id,
+        image_url: '/storage/' + image.image_url
+      });
+    });
   }
 });
 

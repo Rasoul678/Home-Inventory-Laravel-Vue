@@ -26,9 +26,19 @@ Route::get('/items/create', 'ItemController@create')->name('items.create');
 
 Route::get('/items/{item:name}', 'ItemController@show')->name('items.show');
 
+Route::get('/items/{item:name}/edit', 'ItemController@edit')->name('items.edit');
+
+Route::delete('/items/{item}', 'ItemController@destroy')->name('items.destroy');
+
 Route::post('/api/items', 'ItemController@store')->name('items.store');
 
-Route::post('/api/items/{item}/image_upload', 'ItemController@upload')->name('items.upload');
+Route::post('/api/items/{item}/images', 'ItemController@upload')->name('items.upload');
+
+Route::delete('/api/items/{item}/images/{id}', 'ItemController@remove')->name('items.remove');
+
+Route::get('/items/{item:name}/products/create', 'ItemProductController@create')->name('products.create');
+
+Route::post('/items/{item}/products', 'ItemProductController@store')->name('products.store');
 
 Route::post('/api/items/size', 'SizeController@store')->name('size.store');
 

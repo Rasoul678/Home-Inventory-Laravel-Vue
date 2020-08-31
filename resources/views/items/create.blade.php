@@ -1,8 +1,5 @@
 <x-master>
-    <create-item
-        :user="{{ Auth::user() }}"
-        inline-template
-    >
+    <create-item inline-template>
         <div class="grid grid-cols-8">
             <form v-on:submit.prevent="createItem()" class="col-start-1 col-span-8 md:col-start-2 md:col-span-6 mx-5">
                 <h1 class="text-center text-2xl md:text-4xl my-2 font-bold">New Item</h1>
@@ -114,8 +111,9 @@
                         v-model="itemDescription"
                         id="description"
                         name="description"
+                        placeholder="Describe the item... "
                         rows="3"
-                        class="border-2 p-2 rounded border-black w-full"
+                        class="placeholder-black border-2 p-2 rounded border-black w-full"
                     ></textarea>
                 </div>
                 <button type="submit" class="mt-5 p-2 bg-teal-400 w-full rounded text-xl font-bold">Create</button>

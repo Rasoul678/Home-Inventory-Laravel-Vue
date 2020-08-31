@@ -13,7 +13,16 @@ class Item extends Model
         'user_id', 'company_id', 'size_id', 'item_type_id', 'name', 'description', 'sku', 'sparks_joy'
     ];
 
-    protected $with = ['user', 'company', 'type'];
+    protected $with = ['user', 'company', 'type', 'images', 'products'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($model){
+            $model->images->each->delete();
+        });
+    }
 
     public function relatedTo()
     {

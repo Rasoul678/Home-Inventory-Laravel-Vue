@@ -30,10 +30,10 @@
                     <label for="description" class="text-md md:text-xl">Description</label>
                     <textarea
                         v-model="companyDescription"
-                        class="w-full border-2 border-black rounded p-5 bg-gray-800 text-white"
+                        class="placeholder-black w-full border-2 border-black rounded p-3"
                         name="description"
                         id="description"
-                        placeholder="Describe the Company"
+                        placeholder="Describe the company"
                         rows="3"></textarea>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-5">
