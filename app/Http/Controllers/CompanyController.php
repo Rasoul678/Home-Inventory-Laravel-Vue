@@ -11,7 +11,7 @@ class CompanyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('auth');
     }
 
     /**
@@ -28,6 +28,8 @@ class CompanyController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Company::class);
+
         $addresses = Address::all();
 
         return view('company.create', compact('addresses'));
@@ -40,6 +42,8 @@ class CompanyController extends Controller
      */
     public function store()
     {
+        $this->authorize('create', Company::class);
+
         try {
             $attributes = request()->validate([
                 'address_id'=>'required|exists:addresses,id',

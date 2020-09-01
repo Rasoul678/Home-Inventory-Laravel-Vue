@@ -1,9 +1,12 @@
 <script>
+import swal from "sweetalert";
+
 export default {
-    props: [],
+    props: ['companies'],
 
     data(){
         return {
+            classes: `border-2 p-2 rounded ${this.companies.length ? 'border-black ' : 'border-red-500'} w-full`,
             itemName: '',
             itemCompany: '',
             itemLength: '',
@@ -81,5 +84,26 @@ export default {
                 .catch((error) => console.log(error));
         }
     },
+
+    mounted() {
+        if(this.companies.length === 0){
+            swal({
+                title: "No Companies!",
+                text: "Add Company First.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: false,
+            })
+                .then((willAdd) => {
+                    if (willAdd) {
+                        window.location.href = '/companies/create';
+                    } else {
+                        swal("You can do it later. enjoy!", {
+                            icon: 'success'
+                        });
+                    }
+                });
+        }
+    }
 }
 </script>

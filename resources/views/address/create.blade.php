@@ -2,7 +2,7 @@
     <create-address inline-template>
         <div class="grid grid-cols-8">
             <form v-on:submit.prevent="createAddress()" class="col-start-2 col-span-6 md:col-start-3 md:col-span-4">
-                <h1 class="text-center text-2xl md:text-4xl my-10 font-bold">New Address</h1>
+                <h1 class="text-center text-2xl md:text-4xl my-5 font-bold">New Address</h1>
                 <div class="my-2">
                     <label for="street-1" class="text-md md:text-xl">Street Address 1:</label>
                     <input

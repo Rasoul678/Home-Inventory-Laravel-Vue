@@ -1,12 +1,12 @@
 <template>
     <div >
         <div class="text-center my-3">
-            <a class="cursor-pointer text-xl" @click="showMap = !showMap">
+            <a class="cursor-pointer text-xl" @click="toggleMap">
                 <span v-if="!showMap">
-                    Show Map <i class="fa fa-chevron-down"></i>
+                    Show Addresses <i class="fa fa-chevron-down"></i>
                 </span>
                 <span v-else>
-                    Hide Map <i class="fa fa-chevron-up"></i>
+                    Hide Addresses <i class="fa fa-chevron-up"></i>
                 </span>
             </a>
         </div>
@@ -15,7 +15,7 @@
             :zoom="zoom"
             :center="center"
             :options="mapOptions"
-            class="border-2 border-black rounded"
+            :class="classes"
             style="height: 400px; width: 100%"
             @update:center="centerUpdate"
             @update:zoom="zoomUpdate"
@@ -38,6 +38,7 @@
 <script>
 import { latLng } from "leaflet";
 import { LPopup, LTooltip } from "vue2-leaflet";
+import swal from "sweetalert";
 
 export default {
     props: ['addresses'],
@@ -45,6 +46,7 @@ export default {
     components: { LPopup, LTooltip },
     data() {
         return {
+            classes: `border-2 ${this.addresses.length ? 'border-black' : 'border-red-500'} rounded`,
             zoom: 3,
             center: latLng(37.71859, -100.37017),
             url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -70,6 +72,28 @@ export default {
 
         setAddress(address){
             this.$emit('add', address.id)
+        },
+
+        toggleMap(){
+            this.showMap = !this.showMap;
+            if(this.addresses.length === 0 && this.showMap){
+                swal({
+                    title: "No Addresses!",
+                    text: "Add some Addresses.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                    .then((willAdd) => {
+                        if (willAdd) {
+                            window.location.href = '/addresses/create';
+                        } else {
+                            swal("You can do it later. enjoy!", {
+                                icon: 'success'
+                            });
+                        }
+                    });
+            }
         }
 
     },

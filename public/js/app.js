@@ -1999,6 +1999,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet */ "./node_modules/leaflet/dist/leaflet-src.js");
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue2_leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-leaflet */ "./node_modules/vue2-leaflet/dist/vue2-leaflet.es.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2036,6 +2038,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2046,6 +2049,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      classes: "border-2 ".concat(this.addresses.length ? 'border-black' : 'border-red-500', " rounded"),
       zoom: 3,
       center: Object(leaflet__WEBPACK_IMPORTED_MODULE_0__["latLng"])(37.71859, -100.37017),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -2068,6 +2072,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     setAddress: function setAddress(address) {
       this.$emit('add', address.id);
+    },
+    toggleMap: function toggleMap() {
+      this.showMap = !this.showMap;
+
+      if (this.addresses.length === 0 && this.showMap) {
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: "No Addresses!",
+          text: "Add some Addresses.",
+          icon: "warning",
+          buttons: true,
+          dangerMode: false
+        }).then(function (willAdd) {
+          if (willAdd) {
+            window.location.href = '/addresses/create';
+          } else {
+            sweetalert__WEBPACK_IMPORTED_MODULE_2___default()("You can do it later. enjoy!", {
+              icon: 'success'
+            });
+          }
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -2150,6 +2175,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.clear();
 
         console.log(response.data);
+        window.history.back();
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2213,6 +2239,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this.clear();
 
+        window.location.href = '/items/create';
         console.log(response.data);
       })["catch"](function (error) {
         return console.log(error);
@@ -2232,10 +2259,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ['companies'],
   data: function data() {
     return {
+      classes: "border-2 p-2 rounded ".concat(this.companies.length ? 'border-black ' : 'border-red-500', " w-full"),
       itemName: '',
       itemCompany: '',
       itemLength: '',
@@ -2288,7 +2319,7 @@ __webpack_require__.r(__webpack_exports__);
           data: item
         }).then(function (response) {
           if (response.data.message) {
-            swal({
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
               title: response.data.message,
               text: 'Select another name, Please.',
               icon: "warning",
@@ -2296,7 +2327,7 @@ __webpack_require__.r(__webpack_exports__);
               timer: 3000
             });
           } else {
-            swal({
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
               title: "Good job!",
               text: "Item has been added!",
               icon: "success",
@@ -2310,6 +2341,25 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {
         return console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    if (this.companies.length === 0) {
+      sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+        title: "No Companies!",
+        text: "Add Company First.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: false
+      }).then(function (willAdd) {
+        if (willAdd) {
+          window.location.href = '/companies/create';
+        } else {
+          sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("You can do it later. enjoy!", {
+            icon: 'success'
+          });
+        }
       });
     }
   }
@@ -2330,13 +2380,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['items'],
+  props: ['items', 'user'],
   data: function data() {
     return {};
   },
   methods: {},
   mounted: function mounted() {
-    if (this.items.length === 0) {
+    if (this.items.length === 0 && this.user.role !== 'user') {
       sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
         title: "Empty Inventory!",
         text: "Build your inventory by adding some items.",
@@ -52992,20 +53042,16 @@ var render = function() {
           "a",
           {
             staticClass: "cursor-pointer text-xl",
-            on: {
-              click: function($event) {
-                _vm.showMap = !_vm.showMap
-              }
-            }
+            on: { click: _vm.toggleMap }
           },
           [
             !_vm.showMap
               ? _c("span", [
-                  _vm._v("\n                Show Map "),
+                  _vm._v("\n                Show Addresses "),
                   _c("i", { staticClass: "fa fa-chevron-down" })
                 ])
               : _c("span", [
-                  _vm._v("\n                Hide Map "),
+                  _vm._v("\n                Hide Addresses "),
                   _c("i", { staticClass: "fa fa-chevron-up" })
                 ])
           ]
@@ -53016,7 +53062,7 @@ var render = function() {
         ? _c(
             "l-map",
             {
-              staticClass: "border-2 border-black rounded",
+              class: _vm.classes,
               staticStyle: { height: "400px", width: "100%" },
               attrs: {
                 zoom: _vm.zoom,

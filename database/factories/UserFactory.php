@@ -21,6 +21,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'role'=>$faker->name,
         'email_verified_at' => now(),
         'last_login'=>now(),
         'password' => bcrypt('password'),

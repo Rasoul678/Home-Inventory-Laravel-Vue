@@ -47,6 +47,7 @@ export default {
             })
                 .then(response => {
                     this.clear();
+                    window.location.href = '/items/create';
                     console.log(response.data);
                 })
                 .catch(error => console.log(error));

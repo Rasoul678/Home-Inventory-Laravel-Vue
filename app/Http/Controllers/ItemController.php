@@ -12,7 +12,7 @@ class ItemController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('auth');
     }
 
     public function index()
@@ -29,6 +29,8 @@ class ItemController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Item::class);
+
         $shapes = Shape::all();
         $companies = Company::where('type', 'producer')->get();
         $types = ItemType::all();
@@ -38,6 +40,8 @@ class ItemController extends Controller
 
     public function store()
     {
+        $this->authorize('create', Item::class);
+
         try {
             $attributes = request()->validate([
                 'company_id'=>'required|exists:companies,id',
@@ -55,7 +59,7 @@ class ItemController extends Controller
 
         }catch (\Exception $exception)
         {
-            return response()->json(['message'=>'Item already exists!']);
+            return response()->json(['message'=>'Try again!']);
         }
     }
 
@@ -70,11 +74,11 @@ class ItemController extends Controller
         $image_path = public_path( '/storage/' . $image->image_url);
 
         if(file_exists($image_path)){
-            File::delete( $image_path);
+            File::delete($image_path);
         }
     });
 
-    $item->delete();
+    $item->forceDelete();
 
     return redirect(route('items.index'));
 }
@@ -100,7 +104,7 @@ class ItemController extends Controller
             File::delete( $image_path);
         }
 
-        $item->images()->whereId($imageId)->delete();
+        $item->images()->whereId($imageId)->forceDelete();
 
         return response()->json(['message'=>'Image deleted!']);
     }

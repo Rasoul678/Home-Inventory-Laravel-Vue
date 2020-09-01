@@ -49,3 +49,7 @@ Route::post('/api/addresses', 'AddressController@store')->name('address.store');
 Route::get('/companies/create', 'CompanyController@create')->name('company.create');
 
 Route::post('/api/companies', 'CompanyController@store')->name('company.store');
+
+Route::get('/profiles/{user:name}', 'ProfileController@show')->name('profiles.show');
+
+Route::post('/profiles/{user}/avatar', 'ProfileController@avatar')->name('profiles.avatar');

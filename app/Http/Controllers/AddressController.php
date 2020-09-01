@@ -11,7 +11,7 @@ class AddressController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('auth');
     }
 
     /**
@@ -28,6 +28,8 @@ class AddressController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Address::class);
+
         $countries = Country::all();
 
         return view('address.create', compact('countries'));
@@ -40,6 +42,8 @@ class AddressController extends Controller
      */
     public function store()
     {
+        $this->authorize('create', Address::class);
+
         try {
             $attributes = request()->validate([
                 'state_id'=>'required|exists:states,id',

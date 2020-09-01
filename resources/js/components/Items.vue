@@ -2,7 +2,7 @@
 import swal from 'sweetalert';
 
 export default {
-    props: ['items'],
+    props: ['items', 'user'],
 
     data(){
         return {
@@ -15,7 +15,7 @@ export default {
     },
 
     mounted() {
-        if(this.items.length === 0){
+        if(this.items.length === 0 && this.user.role !== 'user'){
             swal({
                 title: "Empty Inventory!",
                 text: "Build your inventory by adding some items.",

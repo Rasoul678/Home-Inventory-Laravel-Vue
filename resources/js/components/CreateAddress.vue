@@ -58,6 +58,7 @@ export default {
                 .then((response) => {
                     this.clear()
                     console.log(response.data);
+                    window.history.back();
                 })
                 .catch((error) => console.log(error))
         }

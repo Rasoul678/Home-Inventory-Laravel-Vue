@@ -1,13 +1,15 @@
 <x-master>
-    <items v-bind:items="{{$items}}" inline-template>
+    <items :user="{{ Auth::user() }}" v-bind:items="{{$items}}" inline-template>
         <div class="m-5 md:m-10">
             <div class="flex justify-between align-items-center mx-10">
                 <div>
                     <span class="text-center text-2xl md:text-4xl font-bold">All Items</span>
                 </div>
-                <div>
-                    <a href="{{ route('items.create') }}" class="text-xl md:text-2xl bg-green-400 px-5 py-1 rounded inline-block">+ Item</a>
-                </div>
+                @can('create', \App\Item::class)
+                    <div>
+                        <a href="{{ route('items.create') }}" class="text-xl md:text-2xl bg-green-400 px-5 py-1 rounded inline-block">+ Item</a>
+                    </div>
+                @endcan
             </div>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mt-5 gap-4">
                 @forelse($items as $item)
@@ -22,23 +24,25 @@
                             </div>
                             <div id="back" class="absolute w-full h-full" style="backface-visibility: hidden; transform: rotateY(180deg)">
                                 <div>
-                                    <a href="{{ route('items.show', $item->name) }}" class="text-center text-2xl md:text-3xl block">{{ $item->name }}</a>
-                                    <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2">
-                                        <span>Company: </span>
-                                        <span>{{ $item->company->name }}</span>
-                                    </div>
-                                    <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2 mt-2">
-                                        <span>Type: </span>
-                                        <span>{{ $item->type->name }}</span>
-                                    </div>
-                                    <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2 mt-2">
-                                        <span>Added by: </span>
-                                        <span>{{ $item->user->name }}</span>
-                                    </div>
-                                    <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2 mt-2">
-                                        <span>Added at: </span>
-                                        <span>{{ $item->created_at->diffForHumans() }}</span>
-                                    </div>
+                                    <a href="{{ route('items.show', $item->name) }}" >
+                                        <div class="text-center text-2xl md:text-3xl block">{{ $item->name }}</div>
+                                        <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2">
+                                            <span>Company: </span>
+                                            <span>{{ $item->company->name }}</span>
+                                        </div>
+                                        <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2 mt-2">
+                                            <span>Type: </span>
+                                            <span>{{ $item->type->name }}</span>
+                                        </div>
+                                        <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2 mt-2">
+                                            <span>Added by: </span>
+                                            <span>{{ $item->user->name }}</span>
+                                        </div>
+                                        <div class="flex justify-between bg-gray-300 w-11/12 rounded m-auto p-2 mt-2">
+                                            <span>Added at: </span>
+                                            <span>{{ $item->created_at->diffForHumans() }}</span>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
