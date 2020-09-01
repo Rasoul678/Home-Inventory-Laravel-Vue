@@ -28,9 +28,6 @@ export default {
                         swal("Ok! Build Your Inventory.", {
                             icon: "success",
                         });
-                        window.setTimeout(() => {
-                            window.location.href = '/items/create';
-                        }, 1500)
                     } else {
                         swal("You can do it later. enjoy!");
                     }
