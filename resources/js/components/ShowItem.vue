@@ -36,7 +36,7 @@ export default {
         persist(file){
             let data = new FormData();
 
-            data.append('image_url', file);
+            data.append('item-image', file);
 
             axios({
                 method: 'POST',
