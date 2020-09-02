@@ -5,11 +5,7 @@
                 <div class="text-center md:text-left text-4xl font-bold col-span-8 md:col-span-6 xl:col-span-7">{{ $item->name }}</div>
                 <div class="flex justify-around col-span-8 md:col-span-2 xl:col-span-1 p-3">
                     <div>
-                        <form method="POST" action="{{ route('items.destroy', $item) }}" class="mr-2">
-                            @method('DELETE')
-                            @csrf
-                            <button class="bg-red-500 px-3 py-1 rounded">Delete</button>
-                        </form>
+                        <delete-item :item="{{ $item }}"></delete-item>
                     </div>
                     <div>
                         <a href="{{ route('items.edit', $item) }}">

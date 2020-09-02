@@ -110,7 +110,7 @@ class ItemController extends Controller
      * Delete Item Record From DB.
      *
      * @param  Item  $item
-     * @return Application|RedirectResponse|Redirector
+     * @return JsonResponse
      */
     public function destroy(Item $item)
 {
@@ -134,7 +134,7 @@ class ItemController extends Controller
 
     $item->forceDelete();
 
-    return redirect(route('items.index'));
+    return response()->json(['message'=>'Item has been deleted']);
 }
 
     /**

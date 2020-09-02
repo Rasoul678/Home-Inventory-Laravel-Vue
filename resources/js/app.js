@@ -27,6 +27,7 @@ Vue.component('l-marker', LMarker);
 
 Vue.component('items', require('./components/Items.vue').default);
 Vue.component('show-item', require('./components/ShowItem.vue').default);
+Vue.component('delete-item', require('./components/DeleteItem.vue').default);
 Vue.component('create-item', require('./components/CreateItem.vue').default);
 Vue.component('create-address', require('./components/CreateAddress.vue').default);
 Vue.component('create-company', require('./components/CreateCompany.vue').default);

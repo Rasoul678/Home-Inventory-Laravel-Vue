@@ -60,7 +60,7 @@ export default {
         deleteImage(id){
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will be able to recover this image, Soon!",
+                text: "Once deleted, you won't be able to recover it.",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,

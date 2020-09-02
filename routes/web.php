@@ -28,7 +28,7 @@ Route::get('/items/{item:name}', 'ItemController@show')->name('items.show');
 
 Route::get('/items/{item:name}/edit', 'ItemController@edit')->name('items.edit');
 
-Route::delete('/items/{item}', 'ItemController@destroy')->name('items.destroy');
+Route::delete('/api/items/{item}', 'ItemController@destroy')->name('items.destroy');
 
 Route::post('/api/items', 'ItemController@store')->name('items.store');
 

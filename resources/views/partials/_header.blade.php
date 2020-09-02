@@ -26,7 +26,7 @@
                 >
                     @if(auth()->user()->avatar_url)
                         <img
-                            class="rounded-full border-2 border-black w-12 inline"
+                            class="rounded-full border-2 border-orange-500 w-10 inline"
                             src="{{ auth()->user()->avatar_url }}"
                             alt="{{ auth()->user()->name }}">
                     @else

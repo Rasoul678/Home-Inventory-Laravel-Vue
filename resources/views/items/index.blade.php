@@ -1,13 +1,18 @@
 <x-master>
     <items :user="{{ Auth::user() }}" v-bind:items="{{$items}}" inline-template>
         <div class="m-5 md:m-10">
-            <div class="flex justify-between align-items-center mx-10">
-                <div>
-                    <span class="text-center text-2xl md:text-4xl font-bold">All Items</span>
+            <div class="grid grid-cols-2 sm:mx-10">
+                <div class="text-center sm:text-left text-2xl md:text-4xl font-bold col-span-2 sm:col-span-1 mt-5 mb-10 sm:my-1">
+                    All Items
                 </div>
                 @can('create', \App\Item::class)
-                    <div>
-                        <a href="{{ route('items.create') }}" class="text-xl md:text-2xl bg-green-400 px-5 py-1 rounded inline-block">+ Item</a>
+                    <div class="text-right my-auto col-span-2 sm:col-span-1">
+                        <a
+                            href="{{ route('items.create') }}"
+                            class="text-center text-xl md:text-2xl bg-green-400 px-5 py-2 rounded inline-block w-full sm:w-auto"
+                        >
+                            Add New Item
+                        </a>
                     </div>
                 @endcan
             </div>
@@ -48,7 +53,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-4 text-2xl md:text-4xl text-center bg-teal-400 rounded py-5">There is no item yet!</div>
+                    <div class="col-span-4 text-4xl md:text-4xl text-center bg-gray-800 text-gray-200 rounded-full shadow w-48 h-48 py-16 m-auto mt-20">No Item!</div>
                 @endforelse
             </div>
         </div>
