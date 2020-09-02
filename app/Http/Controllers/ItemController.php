@@ -127,7 +127,9 @@ class ItemController extends Controller
     {
         $publicIds = $item->images->pluck('image_public_id');
 
-        Cloudder::destroyImages($publicIds);
+        $publicIds->each(function($id) {
+            Cloudder::destroyImages($id);
+        });
     }
 
     $item->forceDelete();
