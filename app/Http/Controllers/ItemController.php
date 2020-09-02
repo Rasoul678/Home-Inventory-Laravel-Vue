@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Item;
+use App\ItemImage;
 use App\ItemType;
 use App\Shape;
 use Illuminate\Support\Facades\File;
@@ -121,14 +122,22 @@ class ItemController extends Controller
 
     public function remove(Item $item, $imageId)
     {
-        $image_path = public_path( '/storage/' . $item->images()->where('id', $imageId)->first()->image_url);
+        if(config('app.env') === 'local')
+        {
+            $image_path = public_path( '/storage/' . $item->images()->where('id', $imageId)->first()->image_url);
 
-        if(file_exists($image_path)){
-            File::delete( $image_path);
+            if(file_exists($image_path)){
+                File::delete( $image_path);
+            }
+        }else
+        {
+            $image = ItemImage::where('id', $imageId)->get();
+
+            Cloudder::destroyImage($image->image_public_id);
         }
 
         $item->images()->whereId($imageId)->forceDelete();
 
-        return response()->json(['message'=>'Image deleted!']);
+        return response()->json(['message'=>'Image has been deleted!']);
     }
 }
