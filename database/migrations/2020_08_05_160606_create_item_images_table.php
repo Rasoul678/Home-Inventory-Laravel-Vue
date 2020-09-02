@@ -17,6 +17,7 @@ class CreateItemImagesTable extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->string('image_url')->nullable();
+            $table->string('image_public_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

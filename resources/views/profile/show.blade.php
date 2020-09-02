@@ -2,10 +2,10 @@
     <h1 class="text-center text-2xl md:text-4xl font-bold mt-5">{{ auth()->user()->name }}'s Profile</h1>
     <div class="bg-gray-800 m-8 mt-3 p-10 rounded">
         <div class="text-center">
-            @if(auth()->user()->avatar)
+            @if(auth()->user()->avatar_url)
                 <img
                     class="rounded-full w-32 md:w-48 m-auto border-2 border-black"
-                    src="{{ auth()->user()->avatar }}"
+                    src="{{ auth()->user()->avatar_url }}"
                     alt="image">
             @else
                 <i class="fa fa-user-circle-o text-6xl text-white" aria-hidden="true"></i>

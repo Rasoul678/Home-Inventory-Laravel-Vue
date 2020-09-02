@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use JD\Cloudder\Facades\Cloudder;
 
 class ProfileController extends Controller
 {
@@ -21,21 +22,42 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $path = 'storage/avatars/'. now() . '_' . $user->name .'.jpg';
+        if(config('app.env') === 'local'){
 
-        if($user->avatar){
-            $avatar_path = public_path($user->avatar);
+            $path = 'storage/avatars/'. now() . '_' . $user->name .'.jpg';
 
-            if(file_exists($avatar_path)){
-                File::delete($avatar_path);
+            if($user->avatar_url){
+                $avatar_path = public_path($user->avatar_url);
+
+                if(file_exists($avatar_path)){
+                    File::delete($avatar_path);
+                }
+            }
+
+            Image::make(request()->file('avatar'))->resize(200, 200)->save($path);
+
+            $user->update([
+                'avatar_url'=> '/' . $path
+            ]);
+
+        }else
+        {
+            if ($image = request()->file('avatar')) {
+                $image_path = $image->getRealPath();
+                Cloudder::upload($image_path,  $user->name, [
+                    "folder" => "inventory-laravel/avatars/",
+                    ]);
+                $publicId = Cloudder::getPublicId();
+                $avatarUrl = Cloudder::secureShow($publicId, [
+                    'width'     => 200,
+                    'height'    => 200
+                ]);
+                $user->update([
+                    'avatar_url'=> $avatarUrl,
+                    'avatar_public_id'=> $publicId
+                ]);
             }
         }
-
-        Image::make(request()->file('avatar'))->resize(200, 200)->save($path);
-
-        $user->update([
-            'avatar'=> '/' . $path
-        ]);
 
         return back();
     }

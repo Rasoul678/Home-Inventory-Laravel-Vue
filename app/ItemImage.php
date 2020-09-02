@@ -9,7 +9,7 @@ class ItemImage extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['image_url'];
+    protected $fillable = ['image_url', 'image_public_id'];
 
     public function item()
     {
