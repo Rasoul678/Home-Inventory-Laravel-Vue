@@ -96,7 +96,7 @@ export default {
         this.item.images.forEach((image) => {
             this.avatars.push({
                 id: image.id,
-                image_url: '/storage/' + image.image_url,
+                image_url: image.image_url,
             });
         });
     }

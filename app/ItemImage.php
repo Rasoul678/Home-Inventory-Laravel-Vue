@@ -15,4 +15,14 @@ class ItemImage extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function getImageUrlAttribute($value)
+    {
+        if(config('app.env') === 'local')
+        {
+            return '/storage/' . $value;
+        }else{
+            return $value;
+        }
+    }
 }

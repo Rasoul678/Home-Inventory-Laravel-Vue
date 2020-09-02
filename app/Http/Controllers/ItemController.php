@@ -7,6 +7,7 @@ use App\Item;
 use App\ItemType;
 use App\Shape;
 use Illuminate\Support\Facades\File;
+use JD\Cloudder\Facades\Cloudder;
 
 class ItemController extends Controller
 {
@@ -89,11 +90,33 @@ class ItemController extends Controller
             'image_url'=>'required|image'
         ]);
 
-        $image = $item->images()->create([
-            'image_url'=>request()->file('image_url')->store('itemImages', 'public'),
-        ]);
+        if(config('app.env') === 'local')
+        {
+            $image = $item->images()->create([
+                'image_url'=>request()->file('item-image')->store('itemImages', 'public'),
+            ]);
 
-        return response()->json($image);
+            return response()->json($image);
+        }else
+        {
+            if ($img = request()->file('item-image')) {
+                $image_path = $img->getRealPath();
+                Cloudder::upload($image_path,  now(). '_' . $item->name, [
+                    "folder" => "inventory-laravel/items/". $item->name . '/',
+                ]);
+                $publicId = Cloudder::getPublicId();
+                $imgUrl = Cloudder::secureShow($publicId, [
+                    'width'     => 300,
+                    'height'    => 300
+                ]);
+                $image = $item->images()->create([
+                    'image_url'=> $imgUrl,
+                    'image_public_id'=> $publicId,
+                ]);
+
+                return response()->json($image);
+            }
+        }
     }
 
     public function remove(Item $item, $imageId)

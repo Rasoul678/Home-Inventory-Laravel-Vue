@@ -63,7 +63,7 @@
                     >
                         <input
                             type="file"
-                            name="image_url"
+                            name="item-image"
                             accept="image/*"
                             class="rounded border col-span-12 sm:col-span-8 "
                         >
