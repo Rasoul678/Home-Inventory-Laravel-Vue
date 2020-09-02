@@ -114,13 +114,21 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
 {
-    $item->images->each(function($image){
-        $image_path = public_path( '/storage/' . $image->image_url);
+    if(config('app.env') === 'local')
+    {
+        $item->images->each(function($image){
+            $image_path = public_path( $image->image_url);
 
-        if(file_exists($image_path)){
-            File::delete($image_path);
-        }
-    });
+            if(file_exists($image_path)){
+                File::delete($image_path);
+            }
+        });
+    }else
+    {
+        $publicIds = $item->images->pluck('image_public_id');
+
+        Cloudder::destroyImages($publicIds);
+    }
 
     $item->forceDelete();
 
