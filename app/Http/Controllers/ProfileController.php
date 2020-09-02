@@ -43,6 +43,13 @@ class ProfileController extends Controller
         }else
         {
             if ($image = request()->file('avatar')) {
+                if(isset($user->avatar_url)){
+                    $user->update([
+                        'avatar_url'=> '',
+                        'avatar_public_id'=> ''
+                    ]);
+                    Cloudder::destroyImage($user->avatar_public_id);
+                }
                 $image_path = $image->getRealPath();
                 Cloudder::upload($image_path,  $user->name, [
                     "folder" => "inventory-laravel/avatars/",
