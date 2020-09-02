@@ -17,7 +17,7 @@
                         <div id="card"  class="bg-blue-400 absolute top-0 left-0 w-full h-full rounded" style="transform-style: preserve-3d; transition: all 0.5s ease;">
                             <div id="front" class="absolute w-full" style="backface-visibility: hidden">
                                 @if($item->images->first())
-                                    <img src="storage/{{ $item->images()->first()->image_url }}" alt="{{ $item->name }}" class="h-full rounded w-full border-2 border-black">
+                                    <img src="{{ $item->images()->first()->image_url }}" alt="{{ $item->name }}" class="h-full rounded w-full border-2 border-black">
                                 @else
                                     <img src="https://picsum.photos/id/237/300/300" alt="image" class="h-full rounded w-full">
                                 @endif
