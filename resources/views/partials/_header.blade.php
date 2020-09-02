@@ -24,10 +24,10 @@
                     class="mr-3 text-white text-3xl md:text-4xl"
                     title="{{ Auth::user()->name }}"
                 >
-                    @if(auth()->user()->avatar)
+                    @if(auth()->user()->avatar_url)
                         <img
                             class="rounded-full border-2 border-black w-12 inline"
-                            src="{{ auth()->user()->avatar }}"
+                            src="{{ auth()->user()->avatar_url }}"
                             alt="{{ auth()->user()->name }}">
                     @else
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
