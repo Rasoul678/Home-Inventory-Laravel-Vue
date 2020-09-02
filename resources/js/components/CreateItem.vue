@@ -75,8 +75,11 @@ export default {
                                     text: "Item has been added!",
                                     icon: "success",
                                     button: "OK",
+                                })
+                                .then(() => {
+                                    this.clear();
+                                    window.location.href = '/items';
                                 });
-                                this.clear();
                             }
                         })
                         .catch(error => console.log(error));
