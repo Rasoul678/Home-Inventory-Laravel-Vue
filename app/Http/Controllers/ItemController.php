@@ -87,7 +87,7 @@ class ItemController extends Controller
     public function upload(Item $item)
     {
         request()->validate([
-            'image_url'=>'required|image'
+            'item-image'=>'required|image'
         ]);
 
         if(config('app.env') === 'local')
