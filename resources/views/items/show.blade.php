@@ -71,16 +71,16 @@
                     </form>
                 </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2 mt-5">
-                        <div v-for="avatar in avatars" class="h-48 relative">
+                        <div v-for="image in images" class="h-48 relative">
                             <button
-                                @click="deleteImage(avatar.id)"
+                                @click="deleteImage(image.id)"
                                 title="Delete Image"
                                 class="bg-red-400 opacity-0 absolute inset-0 text-center w-full rounded text-black hover:opacity-75 text-xl">
                                 <i class="fa fa-trash text-4xl"></i>
                             </button>
                             <img
                                 class="h-full rounded m-auto"
-                                :src="avatar.image_url"
+                                :src="image.image_url"
                                 alt="{{ $item->name }}"
                                 title="{{ $item->name }}"
                             >

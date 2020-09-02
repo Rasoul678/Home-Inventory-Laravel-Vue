@@ -4,7 +4,7 @@ export default {
 
     data(){
         return {
-            avatars: [],
+            images: [],
         }
     },
 
@@ -21,11 +21,11 @@ export default {
             reader.readAsDataURL(file);
 
             reader.onload = (e) => {
-                let avatar = {
+                let image = {
                     id: -1,
                     image_url: e.target.result
                 };
-                this.avatars = [...this.avatars, avatar]
+                this.images = [...this.images, image]
             };
 
             e.target.reset();
@@ -50,8 +50,8 @@ export default {
                         icon: "success",
                         button: "OK",
                     });
-                    let avatar = this.avatars.find(avatar => avatar.id === -1);
-                    avatar.id = response.data.id;
+                    let image = this.images.find(img => img.id === -1);
+                    image.id = response.data.id;
                     console.log(response.data);
                 })
                 .catch(error => console.log(error));
@@ -67,8 +67,8 @@ export default {
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        let index = this.avatars.findIndex(avatar => avatar.id === id);
-                        this.avatars.splice(index, 1);
+                        let index = this.images.findIndex(img => img.id === id);
+                        this.images.splice(index, 1);
                         this.remove(id);
                     } else {
                         swal("Your image is safe!");
@@ -94,7 +94,7 @@ export default {
 
     mounted() {
         this.item.images.forEach((image) => {
-            this.avatars.push({
+            this.images.push({
                 id: image.id,
                 image_url: image.image_url,
             });

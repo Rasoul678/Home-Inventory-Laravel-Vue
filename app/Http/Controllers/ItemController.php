@@ -7,7 +7,14 @@ use App\Item;
 use App\ItemImage;
 use App\ItemType;
 use App\Shape;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\File;
+use Illuminate\View\View;
 use JD\Cloudder\Facades\Cloudder;
 
 class ItemController extends Controller
@@ -17,6 +24,11 @@ class ItemController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Show All Items.
+     *
+     * @return Application|Factory|View
+     */
     public function index()
     {
         $items = Item::all();
@@ -24,11 +36,23 @@ class ItemController extends Controller
         return view('items.index', compact('items'));
     }
 
+    /**
+     * Show Single Item.
+     *
+     * @param  Item  $item
+     * @return Application|Factory|View
+     */
     public function show(Item $item)
     {
         return view('items.show', compact('item'));
     }
 
+    /**
+     * Create Item.
+     *
+     * @return Application|Factory|View
+     * @throws AuthorizationException
+     */
     public function create()
     {
         $this->authorize('create', Item::class);
@@ -40,6 +64,12 @@ class ItemController extends Controller
         return view('items.create', compact(['shapes', 'companies', 'types']));
     }
 
+    /**
+     * Store Item in DB.
+     *
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
     public function store()
     {
         $this->authorize('create', Item::class);
@@ -65,11 +95,23 @@ class ItemController extends Controller
         }
     }
 
+    /**
+     * Edit Item.
+     *
+     * @param  Item  $item
+     * @return Application|Factory|View
+     */
     public function edit(Item $item)
     {
         return view('items.edit', compact('item'));
     }
 
+    /**
+     * Delete Item Record From DB.
+     *
+     * @param  Item  $item
+     * @return Application|RedirectResponse|Redirector
+     */
     public function destroy(Item $item)
 {
     $item->images->each(function($image){
@@ -85,6 +127,12 @@ class ItemController extends Controller
     return redirect(route('items.index'));
 }
 
+    /**
+     * Upload Image For Item.
+     *
+     * @param  Item  $item
+     * @return JsonResponse
+     */
     public function upload(Item $item)
     {
         request()->validate([
@@ -120,19 +168,26 @@ class ItemController extends Controller
         }
     }
 
+    /**
+     * Remove Item Image.
+     *
+     * @param  Item  $item
+     * @param $imageId
+     * @return JsonResponse
+     */
     public function remove(Item $item, $imageId)
     {
+        $image = ItemImage::where('id', $imageId)->first();
+
         if(config('app.env') === 'local')
         {
-            $image_path = public_path( '/storage/' . $item->images()->where('id', $imageId)->first()->image_url);
+            $image_path = public_path( $image->image_url);
 
             if(file_exists($image_path)){
                 File::delete( $image_path);
             }
         }else
         {
-            $image = ItemImage::where('id', $imageId)->get();
-
             Cloudder::destroyImage($image->image_public_id);
         }
 
